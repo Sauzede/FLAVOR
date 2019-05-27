@@ -1,0 +1,10 @@
+Auxiliary material for Paper #
+Retrieval of phytoplankton communities and chlorophyll a concentration from in situ fluorescence profiles using neural networks
+R. Sauzede, Laboratoire d'Océanographie de Villefranche, UMR 7093 CNRS, Université Pierre et Marie Curie-Paris 6, Quai de la Darse BP 08, 06238 Villefranche-Sur-Mer, France 
+
+OUTPUT
+
+This sub-directory contains the functions to create the output data from the ten points retrieved by the MLP. This is the second step of the FLAVOR method.
+This sub-directory contains two sub-sub directory : one for the retrieval of a quasi-continuous profile of total chlorophyll-a concentration and one of the simultaneously retrievals of three quasi continuous profiles of chlorophyll-a concentrations associated with three phytoplankton size classes.
+The sript is named Output.R.
+

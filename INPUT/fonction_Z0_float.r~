@@ -1,0 +1,46 @@
+
+
+filtre.mediane <- function(y, m){
+ y <- as.numeric(y)
+ ny <- length(y)
+ res <- rep(NA, ny)
+ for (i in 1:ny){
+   indi <- (i-m):(i+m)
+   if (i<m) indi <- 1:(i+m)
+   if (i+m>ny) indi <- i:ny
+   tmpi <- y[indi]
+   ok <- length(tmpi[!is.na(tmpi) & is.finite(tmpi)]) > 0
+   if (ok) res[i] <- median(tmpi, na.rm=T)
+ }
+ res
+}
+
+
+Z0_float <- function(fluo,depth){
+
+	fluo2 <- filtre.mediane(fluo,10)
+
+	#offset pour limiter la variabilité pour les profils mélangés
+	fluo_end=mean(fluo2[(length(fluo2)-10):length(fluo2)])
+    
+	### on fixe les dernier points du profil à 0
+	fluo2 <- fluo2-fluo_end
+
+	#on garde seulement ce qui est supérieur à 0
+	depth <- depth[fluo2>0]
+	fluo2 <- fluo2[fluo2>0]
+
+	#on norme le profil
+	fluo_norm <- (fluo2-min(fluo2))/(max(fluo2)-min(fluo2))
+	fluo_norm <- round(fluo_norm,1)
+
+	#le but est de récupérer la première valeur où le profil vaut 0 (minimum puisque normé)
+	#on le prend après le max de fluo pour pas que l'on ait comme résultat la surface
+	D <- which(fluo_norm==0 & depth>depth[which.max(fluo_norm)])[1]
+
+	#on récupère le Z0
+	depth_0 <- depth[D]
+
+	return(depth_0)
+
+}
